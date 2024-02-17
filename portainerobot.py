@@ -1,4 +1,4 @@
-# pip install python-telegram-bot python-dotenv
+# pip install python-telegram-bot==13.7 python-dotenv
 
 import os
 import logging
