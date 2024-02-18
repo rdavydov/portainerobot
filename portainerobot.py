@@ -55,7 +55,8 @@ def get_stack_info(stack_name, porta=False):
     response = requests.get(url, headers=headers)
     
     # Log the response
-    event_logger.info(f"Response {response.status_code}: {response.text}")
+    # event_logger.info(f"Response {response.status_code}: {response.text}")
+    event_logger.info(f"Response {response.status_code}")
     
     # Check if the request was successful
     if response.status_code == 200:
