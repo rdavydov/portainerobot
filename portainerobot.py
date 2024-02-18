@@ -35,13 +35,13 @@ private_chat_logger.addHandler(private_chat_handler)
 TELEGRAM_API_TOKEN = os.getenv('TELEGRAM_API_TOKEN')
 
 # Function to get stack information
-def get_stack_info(stack_name):
+def get_stack_info(stack_name, porta=False):
     # Retrieve the API key and stack ID from the .env file
-    X_API_KEY = os.getenv('X_API_KEY')
+    X_API_KEY = os.getenv('X_API_KEY') if not porta else os.getenv('X_API_KEY_PORTA')
     stack_id = os.getenv(stack_name)
     
     # URL to make the GET request
-    url = f"https://portainer.eis-online.ru/api/stacks/{stack_id}"
+    url = f"https://portainer.eis-online.ru/api/stacks/{stack_id}" if not porta else f"https://porta.eis-online.ru/api/stacks/{stack_id}"
     
     # Headers for the GET request
     headers = {
@@ -107,12 +107,12 @@ def handle_message(update, context):
         # Extract the command
         command_parts = message_text.split()
         if len(command_parts) == 1:
-            context.bot.send_message(chat_id=chat_id, text="Give me the stack name, e.g. @portainerobot dev (or dev2, dev3, stage-eis)", reply_to_message_id=update.message.message_id)
+            context.bot.send_message(chat_id=chat_id, text="Give me the stack name, e.g. @portainerobot dev (or dev2, dev3, stage-eis, reestr-rf)", reply_to_message_id=update.message.message_id)
         else:
             # Extract the stack name
             _, stack_name = command_parts
             # Get the stack information
-            info = get_stack_info(stack_name)
+            info = get_stack_info(stack_name) if stack_name != 'reestr-rf' else get_stack_info(stack_name, porta=True)
             # Send the message back to the user, citing their message
             reply_text = f"{username} requested info:\n{info}"
             context.bot.send_message(chat_id=chat_id, text=reply_text, reply_to_message_id=update.message.message_id)
