@@ -34,7 +34,7 @@ def get_stack_info(update, context):
             f"{update.message.from_user} tried to use the /get command from chat {update.message.chat_id}")
         return
     if len(context.args) == 0:
-        reply_text = "Give me the stack name, e.g. /get dev (or dev2, dev3, stage-eis, reestr-rf) and I'll answer with the <stack name> <frontend version> <backend version>"
+        reply_text = "Give me the stack name, e.g. /get dev (or dev2, dev3, stage-eis, reestr, dev228) and I'll answer with the <stack name> <frontend version> <backend version>"
         context.bot.send_message(chat_id=update.message.chat_id,
                                  text=reply_text, reply_to_message_id=update.message.message_id)
         return
